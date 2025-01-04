@@ -149,3 +149,38 @@ Outputs the full OID record
 % ./lfs-test-server cmd 7c9414fe21ad7b45ffb6e72da86f9a9e13dbb2971365ae7bcb8cc7fbbba7419c
 &{Oid:7c9414fe21ad7b45ffb6e72da86f9a9e13dbb2971365ae7bcb8cc7fbbba7419c Size:3334144 Existing:false}
 ```
+
+
+## Getting start 
+```
+go build
+
+openssl req -x509 -sha256 -nodes -days 2100 -newkey rsa:2048 -keyout mine.key -out mine.crt
+
+```
+
+
+## docker build
+
+```
+docker build . -t git-lfs-server
+```
+
+## docker run
+
+```
+  docker run -d \
+  -p 9998:9998 \
+  -v /root/data:/go/content \
+  -e "LFS_LISTEN=tcp://:9998" \
+  -e "LFS_HOST=127.0.0.1:9998" \
+  -e "LFS_CONTENTPATH=content" \
+  -e "LFS_ADMINUSER=admin" \
+  -e "LFS_ADMINPASS=admin" \
+  -e "LFS_CERT=mine.crt" \
+  -e "LFS_KEY=mine.key" \
+  -e "LFS_SCHEME=https" \
+  --name git-lfs-server-1 \
+  localhost/git-lfs-server
+```
+

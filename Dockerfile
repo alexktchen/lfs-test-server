@@ -1,12 +1,8 @@
-FROM golang:1.14.7
-MAINTAINER GitHub, Inc.
+FROM golang:latest
 
-WORKDIR /go/src/github.com/git-lfs/lfs-test-server
-
-COPY . .
-
-RUN go build
-
-EXPOSE 8080
-
-CMD /go/src/github.com/git-lfs/lfs-test-server/lfs-test-server
+COPY ./lfs-test-server .
+COPY run.sh .
+COPY mine.key .
+COPY mine.crt .
+EXPOSE 9999
+CMD ["./run.sh"]
